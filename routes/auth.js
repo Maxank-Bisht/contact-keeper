@@ -1,4 +1,10 @@
 const express = require('express');
+const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -12,8 +18,46 @@ router.get('/', (req, res) => {
 // @route       POST api/auth
 // @desc        Auth user & get user
 // @access      Public
-router.post('/', (req, res) => {
-	res.send('Log in user');
-});
+router.post(
+	'/',
+	[check('email', 'Invalid Email').isEmail(), check('password', 'Please Enter a password').exists()],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+		const { email, password } = req.body;
+
+		let user = await User.findOne({ email });
+		try {
+			if (!user) {
+				res.json({ msg: 'Invalid Credentials' });
+			}
+			const isMatch = await bcrypt.compare(password, user.password);
+			if (!isMatch) {
+				res.json({ msg: 'Invalid Credentials' });
+			}
+			const payload = {
+				user: {
+					id: user.id,
+				},
+			};
+			jwt.sign(
+				payload,
+				config.get('jwtSecret'),
+				{
+					expiresIn: 360000,
+				},
+				(err, token) => {
+					if (err) throw err;
+					res.json({ token });
+				}
+			);
+		} catch (err) {
+			console.error(err.message);
+			res.status(500).send('Server Error');
+		}
+	}
+);
 
 module.exports = router;
