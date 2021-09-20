@@ -1,9 +1,10 @@
 import './App.css';
+import Navbar from './components/Navbar';
 
 const App = () => {
 	return (
 		<div className='App'>
-			<h1>Contact Keeper</h1>
+			<Navbar />
 		</div>
 	);
 };
