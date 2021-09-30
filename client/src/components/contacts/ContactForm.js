@@ -27,7 +27,7 @@ const ContactForm = () => {
 		<form onSubmit={onSubmit}>
 			<h2 className='text-primary'>Add Contact</h2>
 			<input type='text' name='name' value={name} placeholder='Name' onChange={onChange} />
-			<input type='text' name='email' value={email} placeholder='Email' onChange={onChange} />
+			<input type='email' name='email' value={email} placeholder='Email' onChange={onChange} />
 			<input type='text' name='phone' value={phone} placeholder='Phone' onChange={onChange} />
 			<h5>Contact Type:</h5>
 			<input type='radio' name='type' value='personal' onChange={onChange} checked={type === 'personal'} />
