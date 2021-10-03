@@ -1,8 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ContactContext from '../../context/contact/contactContext';
 
 const ContactForm = () => {
 	const contactContext = useContext(ContactContext);
+	const { addContact, updateContact, current, clearCurrent } = contactContext;
+
+	useEffect(() => {
+		if (current !== null) {
+			setContact(current);
+		} else {
+			setContact({
+				name: '',
+				email: '',
+				phone: '',
+				type: 'personal',
+			});
+		}
+	}, [contactContext, current]);
+
 	const [contact, setContact] = useState({
 		name: '',
 		email: '',
@@ -12,20 +27,22 @@ const ContactForm = () => {
 	const { name, email, phone, type } = contact;
 
 	const onChange = (e) => setContact({ ...contact, [e.target.name]: e.target.value });
+	const clearAll = () => {
+		clearCurrent();
+	};
 	const onSubmit = (e) => {
 		e.preventDefault();
-		contactContext.addContact(contact);
-		setContact({
-			name: '',
-			email: '',
-			phone: '',
-			type: 'personal',
-		});
+		if (current === null) {
+			addContact(contact);
+		} else {
+			updateContact(contact);
+		}
+		clearCurrent();
 	};
 
 	return (
 		<form onSubmit={onSubmit}>
-			<h2 className='text-primary'>Add Contact</h2>
+			<h2 className='text-primary'> {current ? 'Edit Contact' : 'Add Contact'} </h2>
 			<input type='text' name='name' value={name} placeholder='Name' onChange={onChange} />
 			<input type='email' name='email' value={email} placeholder='Email' onChange={onChange} />
 			<input type='text' name='phone' value={phone} placeholder='Phone' onChange={onChange} />
@@ -41,8 +58,19 @@ const ContactForm = () => {
 			/>
 			Professional
 			<div>
-				<input type='submit' value='Save Contact' className='btn btn-primary btn-block' />
+				<input
+					type='submit'
+					value={current ? 'Update Contact' : 'Add Contact'}
+					className='btn btn-primary btn-block'
+				/>
 			</div>
+			{current && (
+				<div>
+					<button className='btn btn-light btn-block' onClick={clearAll}>
+						Clear Contact
+					</button>
+				</div>
+			)}
 		</form>
 	);
 };
