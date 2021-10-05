@@ -2,7 +2,7 @@
 
 /* Global Styles */
 :root {
-	--primary-color: #003699;
+	--primary-color: #206eff;
 	--dark-color: #333333;
 	--light-color: #f4f4f4;
 	--danger-color: #dc3545;
@@ -94,9 +94,17 @@ img {
 .card {
 	padding: 1rem;
 	border: #ccc 1px dotted;
+	border-radius: 5px;
 	margin: 0.7rem 0;
 }
-
+.card-heading::after {
+	content: '';
+	display: block;
+	width: 90px;
+	height: 1.5px;
+	background-color: var(--primary-color);
+	border-radius: 2rem;
+}
 /* List */
 .list {
 	margin: 0.5rem 0;
@@ -194,6 +202,7 @@ img {
 	margin-right: 0.5rem;
 	transition: opacity 0.2s ease-in;
 	outline: none;
+	border-radius: 5px;
 }
 
 .btn-link {
@@ -282,6 +291,7 @@ img {
 
 .btn:hover {
 	opacity: 0.8;
+	transform: translateY(-1px);
 }
 
 .bg-light,
@@ -315,6 +325,7 @@ textarea {
 	padding: 0.4rem;
 	font-size: 1.2rem;
 	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 input[type='submit'],
