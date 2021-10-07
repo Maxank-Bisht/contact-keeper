@@ -233,57 +233,77 @@ img {
 }
 
 .alert {
+	border-radius: 10px;
 	padding: 0.7rem;
 	margin: 1rem 0;
 	opacity: 0.9;
 	background: var(--light-color);
 	color: #333;
 }
+.alert-primary {
+	border: 2px solid var(--primary-color);
+	background-color: #206eff41;
+	color: var(--primary-color);
+}
+.alert-danger {
+	border: 2px solid var(--danger-color);
+	background-color: blanchedalmond;
+	color: var(--danger-color);
+}
+.alert-light {
+	border: 2px solid var(--light-color);
+	background-color: rgb(170, 170, 170);
+	color: var(--light-color);
+}
+.alert-dark {
+	border: 2px solid var(--dark-color);
+	background-color: #3333332a;
+	color: var(--dark-color);
+}
+.alert-success {
+	border: 2px solid var(--success-color);
+	background-color: #28a7452a;
+	color: var(--success-color);
+}
 
 .btn-primary,
 .bg-primary,
-.badge-primary,
-.alert-primary {
+.badge-primary {
 	background: var(--primary-color);
 	color: #fff;
 }
 
 .btn-light,
 .bg-light,
-.badge-light,
-.alert-light {
+.badge-light {
 	background: var(--light-color);
 	color: #333;
 }
 
 .btn-dark,
 .bg-dark,
-.badge-dark,
-.alert-dark {
+.badge-dark {
 	background: var(--dark-color);
 	color: #fff;
 }
 
 .btn-danger,
 .bg-danger,
-.badge-danger,
-.alert-danger {
+.badge-danger {
 	background: var(--danger-color);
 	color: #fff;
 }
 
 .btn-success,
 .bg-success,
-.badge-success,
-.alert-success {
+.badge-success {
 	background: var(--success-color);
 	color: #fff;
 }
 
 .btn-white,
 .bg-white,
-.badge-white,
-.alert-white {
+.badge-white {
 	background: #fff;
 	color: #333;
 	border: #ccc solid 1px;
