@@ -1,10 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = () => {
 	const alertContext = useContext(AlertContext);
+	const authContext = useContext(AuthContext);
 
 	const { setAlert } = alertContext;
+	const { register, error, clearErrors } = authContext;
+
+	useEffect(() => {
+		if (error === 'user already exists') {
+			setAlert('User already exists', 'danger');
+			clearErrors();
+		}
+	}, [error]);
 
 	const [user, setUser] = useState({
 		name: '',
@@ -18,18 +28,24 @@ const Register = () => {
 	const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
 	const onSubmit = (e) => {
+		let errors = false;
 		e.preventDefault();
 		if (name === '' || email === '' || password === '') {
 			setAlert('Please enter all fields', 'danger');
+			errors = true;
 		}
-		if (password.length <= 6) {
-			setAlert('Password should be greate than 6 character', 'danger');
+		if (password.length <= 5) {
+			setAlert('Password should be greater than 6 character', 'danger');
+			errors = true;
 		}
 		if (password !== password2) {
 			setAlert('Passwords did not match', 'danger');
+			errors = true;
 		}
-
-		console.log('Register Submit');
+		if (errors === false) {
+			// setAlert('Registration form submitted.', 'success');
+			register({ name, email, password });
+		}
 	};
 
 	return (
